@@ -48,7 +48,7 @@ public record WebhookMessage( String from, String texto, String listReplyId) {
         return LocalTime.parse(texto.trim(), FMT_HORA);
     }
 
-    public String isConfirmacaoPositiva() {
+    public boolean isConfirmacaoPositiva() {
         return getEstagioAtual() == Status.CONFIRMADO
                 && texto.trim().equalsIgnoreCase("sim");
     }

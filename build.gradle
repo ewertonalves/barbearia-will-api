@@ -3,6 +3,7 @@ plugins {
 	id 'war'
 	id 'org.springframework.boot' version '3.4.5'
 	id 'io.spring.dependency-management' version '1.1.7'
+	id 'jacoco'
 }
 
 group = 'com.integracao.barbebariaWill'
@@ -26,6 +27,10 @@ repositories {
 
 ext {
 	set('springCloudVersion', "2024.0.1")
+}
+
+jacoco {
+	toolVersion = '0.8.13'
 }
 
 dependencies {
@@ -55,4 +60,19 @@ dependencyManagement {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+tasks.test {
+	useJUnitPlatform()
+	finalizedBy tasks.jacocoTestReport
+}
+
+tasks.jacocoTestReport {
+	dependsOn tasks.test
+	reports {
+		html.required = true
+		xml.required  = false
+		csv.required  = false
+		html.outputLocation = layout.buildDirectory.dir('reports/jacoco/html')
+	}
 }

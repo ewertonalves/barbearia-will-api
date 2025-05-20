@@ -38,17 +38,21 @@ public class AppointmentEntity {
     @Column(name = "hora_agendamento")
     private LocalTime hora;
 
+    @Column(name = "profissional")
+    private String profissional;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "status", length = 30, nullable = false)
     private Status status;
 
     public AppointmentEntity(Appointment domain) {
-        this.id         = domain.getId();
-        this.telefone   = domain.getTelefone();
-        this.servicoId  = domain.getServicoId();
-        this.data       = domain.getData();
-        this.hora       = domain.getHora();
-        this.status     = domain.getStatus();
+        this.id             = domain.getId();
+        this.telefone       = domain.getTelefone();
+        this.servicoId      = domain.getServicoId();
+        this.data           = domain.getData();
+        this.hora           = domain.getHora();
+        this.profissional   = domain.getProfissional();
+        this.status         = domain.getStatus();
     }
 
     public Appointment toDomain() {
@@ -62,6 +66,7 @@ public class AppointmentEntity {
         domain.definirServico(this.servicoId);
         domain.definirData(this.data);
         domain.definirHora(this.hora);
+        domain.definirProfissional(this.profissional);
         if (this.status == Status.CONFIRMADO) {
             domain.confirmar();
         }

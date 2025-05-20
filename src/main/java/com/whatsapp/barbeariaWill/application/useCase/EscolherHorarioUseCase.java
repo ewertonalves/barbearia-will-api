@@ -10,7 +10,9 @@ import java.time.format.DateTimeFormatter;
 @Service
 public class EscolherHorarioUseCase {
 
-    private static final DateTimeFormatter FORMATO_HORA = DateTimeFormatter.ofPattern("HH:mm");
+    private static final DateTimeFormatter FORMATO_DATA  = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+    private static final DateTimeFormatter FORMATO_HORA  = DateTimeFormatter.ofPattern("HH:mm");
+
 
     private final AppointmentRepositoryPort repo;
     private final WhatsAppClientPort        client;
@@ -31,9 +33,9 @@ public class EscolherHorarioUseCase {
         String resumo = String.format(
                 "Você escolheu: %s em %s às %s. Confirma? (Sim/Não)",
                 agendamento.getServicoId(),
-                agendamento.getData().format(DateTimeFormatter.ofPattern("dd/mm/yyyy")),
+                agendamento.getData().format(FORMATO_DATA),
                 agendamento.getHora().format(FORMATO_HORA)
         );
-        client.enviarConfirmacao(telefone, hora);
+        client.enviarConfirmacao(telefone, resumo);
     }
 }

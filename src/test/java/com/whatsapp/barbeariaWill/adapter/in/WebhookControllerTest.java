@@ -1,6 +1,5 @@
-package com.whatsapp.barbeariaWill.adapter;
+package com.whatsapp.barbeariaWill.adapter.in;
 
-import com.whatsapp.barbeariaWill.adapter.in.WebhookController;
 import com.whatsapp.barbeariaWill.application.dto.WebhookMessage;
 import com.whatsapp.barbeariaWill.application.dto.WebhookMessageParser;
 import com.whatsapp.barbeariaWill.application.dto.WebhookPayload;

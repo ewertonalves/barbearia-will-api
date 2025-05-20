@@ -2,7 +2,9 @@ package com.whatsapp.barbeariaWill.application.useCase;
 
 import com.whatsapp.barbeariaWill.domain.port.out.AppointmentRepositoryPort;
 import com.whatsapp.barbeariaWill.domain.port.out.WhatsAppClientPort;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ConfirmarAgendamentoUseCase {
 
     private final AppointmentRepositoryPort repo;

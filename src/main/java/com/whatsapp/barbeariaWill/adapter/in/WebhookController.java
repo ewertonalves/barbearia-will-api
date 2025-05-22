@@ -6,11 +6,13 @@ import com.whatsapp.barbeariaWill.application.dto.WebhookPayload;
 import com.whatsapp.barbeariaWill.application.useCase.*;
 import com.whatsapp.barbeariaWill.domain.enums.Status;
 import com.whatsapp.barbeariaWill.domain.port.out.WhatsAppClientPort;
+import com.whatsapp.barbeariaWill.domain.model.Appointment;
+import com.whatsapp.barbeariaWill.adapter.out.persistence.SpringDataAppointmentRepository;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/webhook")
@@ -23,7 +25,7 @@ public class WebhookController {
     private final EscolherHorarioUseCase        escolherHorarioUC;
     private final ConfirmarAgendamentoUseCase   confirmarUC;
     private final WhatsAppClientPort            client;
-
+    private final SpringDataAppointmentRepository appointmentRepository;
 
     public WebhookController(IniciarAgendamentoUseCase  iniciarUC,
                              EscolherServicoUseCase     escolherServicoUC,
@@ -31,7 +33,8 @@ public class WebhookController {
                              EscolherDataUseCase        escolherDataUC,
                              EscolherHorarioUseCase     escolherHorarioUC,
                              ConfirmarAgendamentoUseCase confirmarUC,
-                             WhatsAppClientPort client) {
+                             WhatsAppClientPort client,
+                             SpringDataAppointmentRepository appointmentRepository) {
         this.iniciarUC              = iniciarUC;
         this.escolherServicoUC      = escolherServicoUC;
         this.escolherProfissionalUC = escolherProfissionalUC;
@@ -39,6 +42,7 @@ public class WebhookController {
         this.escolherHorarioUC      = escolherHorarioUC;
         this.confirmarUC            = confirmarUC;
         this.client                 = client;
+        this.appointmentRepository  = appointmentRepository;
     }
 
     @PostMapping
@@ -80,5 +84,11 @@ public class WebhookController {
         return ResponseEntity.ok().build();
     }
 
-
+    @GetMapping("/appointments")
+    public ResponseEntity<List<Appointment>> listarAgendamentos() {
+        List<Appointment> appointments = appointmentRepository.findAll().stream()
+            .map(entity -> new Appointment(entity.getTelefone()))
+            .collect(Collectors.toList());
+        return ResponseEntity.ok(appointments);
+    }
 }

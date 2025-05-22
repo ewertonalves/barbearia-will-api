@@ -6,6 +6,9 @@ import com.whatsapp.barbeariaWill.application.dto.WebhookPayload;
 import com.whatsapp.barbeariaWill.application.useCase.*;
 import com.whatsapp.barbeariaWill.domain.enums.Status;
 import com.whatsapp.barbeariaWill.domain.port.out.WhatsAppClientPort;
+import com.whatsapp.barbeariaWill.domain.model.Appointment;
+import com.whatsapp.barbeariaWill.adapter.out.persistence.SpringDataAppointmentRepository;
+import com.whatsapp.barbeariaWill.adapter.out.persistence.AppointmentEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -42,6 +45,9 @@ public class WebhookControllerTest {
     @Mock
     private WhatsAppClientPort client;
 
+    @Mock
+    private SpringDataAppointmentRepository appointmentRepository;
+
     @InjectMocks
     private WebhookController controller;
 
@@ -77,7 +83,7 @@ public class WebhookControllerTest {
     void deveChamarIniciarQuandoEstagioInciado() {
         var p = payloadComTexto("Olá");
         ResponseEntity<Void> resp = controller.receber(p);
-        assertEquals(200, resp.getStatusCodeValue());
+        assertEquals(200, resp.getStatusCode().value());
         verify(iniciarUC).execute(FROM);
         verifyNoMoreInteractions(
                 escolherServicoUC, escolherProfissionalUC,
@@ -89,7 +95,7 @@ public class WebhookControllerTest {
     void deveChamarEscolherServicoQuandoEstagioServicoSelecionado() {
         var p = payloadComListReply();
         ResponseEntity<Void> resp = controller.receber(p);
-        assertEquals(200, resp.getStatusCodeValue());
+        assertEquals(200, resp.getStatusCode().value());
         verify(escolherServicoUC).execute(FROM, "servico_corte_cabelo");
         verifyNoMoreInteractions(
                 iniciarUC, escolherProfissionalUC,
@@ -111,7 +117,7 @@ public class WebhookControllerTest {
                     .thenReturn(mockedMsg);
 
             ResponseEntity<Void> resp = controller.receber(p);
-            assertEquals(200, resp.getStatusCodeValue());
+            assertEquals(200, resp.getStatusCode().value());
             verify(escolherProfissionalUC).execute(FROM, "Abner");
             verifyNoMoreInteractions(iniciarUC, escolherServicoUC,
                     escolherDataUC, escolherHorarioUC, confirmarUC, client);
@@ -182,5 +188,29 @@ public class WebhookControllerTest {
             verify(client).enviarTexto(eq(FROM), contains("Desculpe, não entendi"));
             verify(iniciarUC).execute(FROM);
         }
+    }
+
+    @Test
+    void deveRetornarListaDeAgendamentosQuandoSucesso() {
+        AppointmentEntity entity = new AppointmentEntity();
+        entity.setTelefone(FROM);
+        List<AppointmentEntity> entities = List.of(entity);
+        when(appointmentRepository.findAll()).thenReturn(entities);
+
+        ResponseEntity<List<Appointment>> response = controller.listarAgendamentos();
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals(1, response.getBody().size());
+        assertEquals(FROM, response.getBody().get(0).getTelefone());
+        verify(appointmentRepository).findAll();
+    }
+
+    @Test
+    void deveRetornarListaVaziaQuandoNenhumAgendamento() {
+        when(appointmentRepository.findAll()).thenReturn(List.of());
+
+        ResponseEntity<List<Appointment>> response = controller.listarAgendamentos();
+        assertEquals(200, response.getStatusCode().value());
+        assertEquals(List.of(), response.getBody());
+        verify(appointmentRepository).findAll();
     }
 }

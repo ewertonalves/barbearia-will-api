@@ -1,18 +1,18 @@
 package com.whatsapp.barbeariaWill.application.useCase;
 
 import com.whatsapp.barbeariaWill.domain.model.Appointment;
-import com.whatsapp.barbeariaWill.domain.port.out.AppointmentRepositoryPort;
-import com.whatsapp.barbeariaWill.domain.port.out.WhatsAppClientPort;
+import com.whatsapp.barbeariaWill.domain.port.out.AppointmentInterfacePort;
+import com.whatsapp.barbeariaWill.domain.port.out.WhatsAppClientIntefacePort;
 import org.springframework.stereotype.Service;
 
 @Service
 public class IniciarAgendamentoUseCase {
 
-    private final AppointmentRepositoryPort repo;
-    private final WhatsAppClientPort        client;
+    private final AppointmentInterfacePort repo;
+    private final WhatsAppClientIntefacePort        client;
 
-    public IniciarAgendamentoUseCase(AppointmentRepositoryPort repo,
-                                     WhatsAppClientPort client) {
+    public IniciarAgendamentoUseCase(AppointmentInterfacePort repo,
+                                     WhatsAppClientIntefacePort client) {
         this.repo   = repo;
         this.client = client;
     }

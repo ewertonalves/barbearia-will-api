@@ -1,7 +1,6 @@
-package com.whatsapp.barbeariaWill.adapter.out.persistence;
+package com.whatsapp.barbeariaWill.domain.model;
 
 import com.whatsapp.barbeariaWill.domain.enums.Status;
-import com.whatsapp.barbeariaWill.domain.model.Appointment;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

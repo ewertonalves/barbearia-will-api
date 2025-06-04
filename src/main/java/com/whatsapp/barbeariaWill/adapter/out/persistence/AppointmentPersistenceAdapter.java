@@ -1,14 +1,16 @@
 package com.whatsapp.barbeariaWill.adapter.out.persistence;
 
+import com.whatsapp.barbeariaWill.adapter.out.persistence.repository.SpringDataAppointmentRepository;
 import com.whatsapp.barbeariaWill.domain.model.Appointment;
-import com.whatsapp.barbeariaWill.domain.port.out.AppointmentRepositoryPort;
+import com.whatsapp.barbeariaWill.domain.model.AppointmentEntity;
+import com.whatsapp.barbeariaWill.domain.port.out.AppointmentInterfacePort;
 import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 import java.util.UUID;
 
 @Component
-public class AppointmentPersistenceAdapter implements AppointmentRepositoryPort {
+public class AppointmentPersistenceAdapter implements AppointmentInterfacePort {
 
     private final SpringDataAppointmentRepository jpaRepo;
 

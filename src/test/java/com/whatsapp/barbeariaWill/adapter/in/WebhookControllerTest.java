@@ -5,10 +5,11 @@ import com.whatsapp.barbeariaWill.application.dto.WebhookMessageParser;
 import com.whatsapp.barbeariaWill.application.dto.WebhookPayload;
 import com.whatsapp.barbeariaWill.application.useCase.*;
 import com.whatsapp.barbeariaWill.domain.enums.Status;
-import com.whatsapp.barbeariaWill.domain.port.out.WhatsAppClientPort;
+import com.whatsapp.barbeariaWill.domain.port.out.WhatsAppClientIntefacePort;
 import com.whatsapp.barbeariaWill.domain.model.Appointment;
-import com.whatsapp.barbeariaWill.adapter.out.persistence.SpringDataAppointmentRepository;
-import com.whatsapp.barbeariaWill.adapter.out.persistence.AppointmentEntity;
+import com.whatsapp.barbeariaWill.domain.model.AppointmentEntity;
+import com.whatsapp.barbeariaWill.adapter.out.persistence.repository.SpringDataAppointmentRepository;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -43,7 +44,7 @@ public class WebhookControllerTest {
     private ConfirmarAgendamentoUseCase confirmarUC;
 
     @Mock
-    private WhatsAppClientPort client;
+    private WhatsAppClientIntefacePort client;
 
     @Mock
     private SpringDataAppointmentRepository appointmentRepository;

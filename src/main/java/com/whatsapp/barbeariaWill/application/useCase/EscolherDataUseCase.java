@@ -1,7 +1,7 @@
 package com.whatsapp.barbeariaWill.application.useCase;
 
-import com.whatsapp.barbeariaWill.domain.port.out.AppointmentRepositoryPort;
-import com.whatsapp.barbeariaWill.domain.port.out.WhatsAppClientPort;
+import com.whatsapp.barbeariaWill.domain.port.out.AppointmentInterfacePort;
+import com.whatsapp.barbeariaWill.domain.port.out.WhatsAppClientIntefacePort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -12,11 +12,11 @@ public class EscolherDataUseCase {
 
     private static final DateTimeFormatter FORMATO_DATA = DateTimeFormatter.ofPattern("dd/mm/yyyy");
 
-    private final AppointmentRepositoryPort repo;
-    private final WhatsAppClientPort        client;
+    private final AppointmentInterfacePort repo;
+    private final WhatsAppClientIntefacePort        client;
 
-    public EscolherDataUseCase(AppointmentRepositoryPort repo,
-                               WhatsAppClientPort client) {
+    public EscolherDataUseCase(AppointmentInterfacePort repo,
+                               WhatsAppClientIntefacePort client) {
         this.repo   = repo;
         this.client = client;
     }

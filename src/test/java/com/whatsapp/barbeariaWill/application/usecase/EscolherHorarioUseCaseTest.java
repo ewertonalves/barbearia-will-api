@@ -3,8 +3,8 @@ package com.whatsapp.barbeariaWill.application.usecase;
 import com.whatsapp.barbeariaWill.application.useCase.EscolherHorarioUseCase;
 import com.whatsapp.barbeariaWill.domain.enums.Status;
 import com.whatsapp.barbeariaWill.domain.model.Appointment;
-import com.whatsapp.barbeariaWill.domain.port.out.AppointmentRepositoryPort;
-import com.whatsapp.barbeariaWill.domain.port.out.WhatsAppClientPort;
+import com.whatsapp.barbeariaWill.domain.port.out.AppointmentInterfacePort;
+import com.whatsapp.barbeariaWill.domain.port.out.WhatsAppClientIntefacePort;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -24,10 +24,10 @@ import static org.mockito.Mockito.*;
 public class EscolherHorarioUseCaseTest {
 
     @Mock
-    private AppointmentRepositoryPort repo;
+    private AppointmentInterfacePort repo;
 
     @Mock
-    private WhatsAppClientPort client;
+    private WhatsAppClientIntefacePort client;
 
     @InjectMocks
     private EscolherHorarioUseCase useCase;

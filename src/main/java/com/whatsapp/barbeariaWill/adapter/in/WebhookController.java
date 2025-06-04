@@ -1,13 +1,14 @@
 package com.whatsapp.barbeariaWill.adapter.in;
 
+import com.whatsapp.barbeariaWill.adapter.out.persistence.repository.SpringDataAppointmentRepository;
 import com.whatsapp.barbeariaWill.application.dto.WebhookMessage;
 import com.whatsapp.barbeariaWill.application.dto.WebhookMessageParser;
 import com.whatsapp.barbeariaWill.application.dto.WebhookPayload;
 import com.whatsapp.barbeariaWill.application.useCase.*;
 import com.whatsapp.barbeariaWill.domain.enums.Status;
-import com.whatsapp.barbeariaWill.domain.port.out.WhatsAppClientPort;
+import com.whatsapp.barbeariaWill.domain.port.out.WhatsAppClientIntefacePort;
 import com.whatsapp.barbeariaWill.domain.model.Appointment;
-import com.whatsapp.barbeariaWill.adapter.out.persistence.SpringDataAppointmentRepository;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,7 @@ public class WebhookController {
     private final EscolherDataUseCase           escolherDataUC;
     private final EscolherHorarioUseCase        escolherHorarioUC;
     private final ConfirmarAgendamentoUseCase   confirmarUC;
-    private final WhatsAppClientPort            client;
+    private final WhatsAppClientIntefacePort            client;
     private final SpringDataAppointmentRepository appointmentRepository;
 
     public WebhookController(IniciarAgendamentoUseCase  iniciarUC,
@@ -33,7 +34,7 @@ public class WebhookController {
                              EscolherDataUseCase        escolherDataUC,
                              EscolherHorarioUseCase     escolherHorarioUC,
                              ConfirmarAgendamentoUseCase confirmarUC,
-                             WhatsAppClientPort client,
+                             WhatsAppClientIntefacePort client,
                              SpringDataAppointmentRepository appointmentRepository) {
         this.iniciarUC              = iniciarUC;
         this.escolherServicoUC      = escolherServicoUC;
